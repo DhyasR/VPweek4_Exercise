@@ -62,6 +62,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -489,21 +490,8 @@ fun Feed(feed: Feed, modifier: Modifier = Modifier) {
             }
         }
 
-        val currentYear = LocalDate.now().year
-        val formatDifYear = DateTimeFormatter.ofPattern("MMMM d, yyyy")
-        val formatSameYear = DateTimeFormatter.ofPattern("MMMM d")
-        val yearFormat = DateTimeFormatter.ofPattern("yyyy")
-        val date = LocalDate.parse(feed.date)
-        val yearOnly = convertStringToDate(feed.date, yearFormat)
-
-        val formattedDate = if (yearOnly.toString() == currentYear.toString()) {
-            date.format(formatSameYear)
-        } else {
-            date.format(formatDifYear)
-        }
-
         Text(
-            text = formattedDate,
+            text = formatDate(feed.date),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 10.dp, end = 10.dp, bottom = 5.dp),
@@ -605,13 +593,22 @@ fun getImageInt(image: String): Int {
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun convertStringToDate(inputDate: String, inputFormat: DateTimeFormatter): LocalDate? {
-    try {
-        return LocalDate.parse(inputDate, inputFormat)
-    } catch (e: Exception) {
-        e.printStackTrace()
+fun formatDate(uploadDateString: String): String {
+    val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val uploadDate = dateFormat.parse(uploadDateString)
+
+    val uploadCalendar = Calendar.getInstance()
+    uploadCalendar.time = uploadDate
+
+    val resultFormat = if (uploadCalendar.get(Calendar.YEAR) == currentYear) {
+        SimpleDateFormat("MMMM d", Locale.getDefault())
+    } else {
+        SimpleDateFormat("MMMM d, yyyy", Locale.getDefault())
     }
-    return null
+
+    return resultFormat.format(uploadDate)
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
