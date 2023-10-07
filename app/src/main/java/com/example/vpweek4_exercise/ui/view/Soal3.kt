@@ -83,7 +83,7 @@ fun Soal3View(story: List<Story>, feed: List<Feed>, suggestion: List<Suggestion>
 
     Scaffold(
         content = {
-            LazyColumn {
+            LazyColumn(modifier = Modifier.padding(bottom = 50.dp)) {
                 item {
                     Row(
                         modifier = Modifier
