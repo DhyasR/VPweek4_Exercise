@@ -80,20 +80,16 @@ fun Soal3View(story: List<Story>, feed: List<Feed>, suggestion: List<Suggestion>
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 10.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                            .padding(vertical = 14.dp, horizontal = 16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.logo_dropdown),
                             contentDescription = "Logo Dropdown",
-                            contentScale = ContentScale.Inside,
-                            modifier = Modifier
-                                .size(100.dp)
                         )
 
                         Row(
-                            modifier = Modifier.padding(end = 15.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(15.dp)
                         ) {
