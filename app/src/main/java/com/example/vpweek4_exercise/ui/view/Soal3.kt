@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -28,6 +29,7 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -46,8 +48,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -472,7 +478,12 @@ fun Feed(feed: Feed, modifier: Modifier = Modifier) {
         ) {
             if (isExpand == true) {
                 Text(
-                    text = "${feed.username} ${feed.caption}",
+                    text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                            append(feed.username)
+                        }
+                        append(" ${feed.caption}")
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 10.dp, end = 10.dp),
@@ -480,12 +491,17 @@ fun Feed(feed: Feed, modifier: Modifier = Modifier) {
                 )
             } else {
                 Text(
-                    text = "${feed.username} ${feed.caption}",
+                    text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                            append(feed.username)
+                        }
+                        append(" ${feed.caption}")
+                    },
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 10.dp, end = 10.dp)
+                        .padding(start = 10.dp, end = 10.dp),
                 )
             }
         }
@@ -506,22 +522,27 @@ fun FriendSuggest(suggestion: Suggestion, modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
     Card(
-        modifier = Modifier.padding(start = 15.dp, top = 10.dp, bottom = 10.dp)
+        modifier = Modifier
+            .padding(start = 15.dp, top = 10.dp, bottom = 10.dp)
+            .border(2.dp, Color.LightGray, shape = RoundedCornerShape(15.dp)),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Icon(
             imageVector = Icons.Default.Close,
             contentDescription = "Close Icon",
             modifier = Modifier
-                .size(20.dp)
+                .size(28.dp)
+                .align(Alignment.End)
+                .padding(end = 10.dp, top = 10.dp)
         )
 
         Column(
-            modifier = Modifier.padding(start = 10.dp, top = 0.dp, end = 10.dp, bottom = 10.dp),
+            modifier = Modifier
+                .padding(start = 10.dp, top = 0.dp, end = 10.dp, bottom = 10.dp)
+                .offset(y = -10.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-
             Image(
                 painter = painterResource(id = getImageInt(image = suggestion.profilePicture)),
                 contentDescription = "Profile Photo",
