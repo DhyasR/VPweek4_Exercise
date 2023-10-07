@@ -64,6 +64,7 @@ import com.example.vpweek4_exercise.model.Story
 import com.example.vpweek4_exercise.model.Suggestion
 import kotlinx.coroutines.launch
 import java.text.DateFormat
+import java.text.NumberFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -412,7 +413,7 @@ fun Feed(feed: Feed, modifier: Modifier = Modifier) {
                             Toast
                                 .makeText(
                                     context,
-                                    "Share Button",
+                                    "Send Button",
                                     Toast.LENGTH_SHORT
                                 )
                                 .show()
@@ -420,7 +421,7 @@ fun Feed(feed: Feed, modifier: Modifier = Modifier) {
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.messanger),
-                            contentDescription = "Share Button",
+                            contentDescription = "Send Button",
                             modifier = Modifier.padding(top = 2.dp)
                         )
                     }
@@ -456,8 +457,10 @@ fun Feed(feed: Feed, modifier: Modifier = Modifier) {
         }
 
         if (feed.like > 1) {
+            val formattedLikes = NumberFormat.getNumberInstance(Locale.getDefault()).format(like)
+
             Text(
-                text = "${like} Likes",
+                text = "${formattedLikes} Likes",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 10.dp, end = 10.dp, top = 5.dp)
