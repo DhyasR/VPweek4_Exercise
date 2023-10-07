@@ -1,17 +1,20 @@
 package com.example.vpweek4_exercise
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.vpweek4_exercise.data.dummy_data
+import com.example.vpweek4_exercise.data.DataSource
 import com.example.vpweek4_exercise.ui.theme.VPweek4_ExerciseTheme
-import com.example.vpweek4_exercise.ui.view.Soal1View
+import com.example.vpweek4_exercise.ui.view.Soal3View
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -21,7 +24,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Soal1View(dummy_data().get_data_line())
+//                    Soal1View(dummy_data().get_data_line())
+                    Soal3View(DataSource().loadStory(), DataSource().loadFeed(), DataSource().loadSuggestion())
                 }
             }
         }
